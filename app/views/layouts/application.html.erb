@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>PopUpFacebook</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<div id="fb-root"></div>
+<script src="http://connect.facebook.net/en_US/all.js"></script>
+    <script>
+      FB.init({
+        appId: "514601985316733",
+        cookie: true,
+        xfbml: true,
+        oauth: true
+      });
+    (function(d, s, id){
+         var js, fjs = d.getElementsByTagName(s)[0];
+         if (d.getElementById(id)) {return;}
+         js = d.createElement(s); js.id = id;
+         js.src = "//connect.facebook.net/en_US/all.js";
+         fjs.parentNode.insertBefore(js, fjs);
+       }(document, 'script', 'facebook-jssdk'));
+    </script>
+    <% if session[:access_token].present? %>
+
+      <p><%= link_to "Logout", signout_path, :method => :delete %></p>
+
+    <% else %>
+      <p><%= link_to "Facebook Connect", facebookusers_start_path, :method => :get %></p>
+    <% end %>
+<%= yield %>
+
+</body>
+</html>
